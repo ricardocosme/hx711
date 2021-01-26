@@ -9,7 +9,7 @@ OBJDUMP=avr-objdump
 INCLUDE=-I../../att85/include -I../include
 CXXFLAGS=-std=$(STD_CXX) -g -mmcu=$(MCU_TARGET) -Wall $(OPTIMIZE) -DF_CPU=1000000 $(INCLUDE)
 
-demos = simple sync_read
+demos = sync_read async_read
 
 all: $(demos:%=%.elf) $(demos:%=%.lst) $(demos:%=%.s)
 
