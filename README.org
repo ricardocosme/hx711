@@ -1,40 +1,47 @@
-** HX711 C++17 driver
-The [[file:datasheet.pdf][HX711]] is a high-resolution 24-bit ADC designed for weight scales and other applications that interface with a bridge sensor. This is a C++17 driver to interface with  [[file:datasheet.pdf][HX711]] using an AVR microcontroller.
+** HX711 C++14 driver for ATtiny85
+The [[file:datasheet.pdf][HX711]] is a high-resolution 24-bit ADC designed for weight scales and other applications that interface with a bridge sensor. This is a header only C++14 driver to interface with  [[file:datasheet.pdf][HX711]] using an ATtiny85.
 
 *** Demo
-The demos below are written to ATtiny85. For other [[#supported_microcontrollers][supported microcontrollers]] the values that represent the pins related to SCK and DOUT must be changed.
+**** Synchronous reading
+#+BEGIN_SRC C++
+#include <hx711.hpp>
+
+int main() {
+  hx711::hx711<PB4 /*SCK*/, PB3 /*DOUT*/> adc;
+  auto code = adc.read();
+}
+#+END_SRC
+[[file:demo/sync_read.cpp][demo/sync_read.cpp]]
 
 **** Asynchronous reading
+#+BEGIN_SRC C++
+#include <hx711.hpp>
+
+int main() {
+  hx711::hx711<PB4 /*SCK*/, PB3 /*DT*/> adc;
+
+  //event loop
+  while(true) {
+    if(auto code = adc.async_read())
+      auto value = code.value();
+  }
+}
+#+END_SRC
 [[file:demo/sync_read.cpp][demo/async_read.cpp]]
+
+**** Gain 128/64/32
 #+BEGIN_SRC C++
 #include <hx711.hpp>
 
-void do_something(int32_t code) {}
-
 int main() {
-    hx711::hx711<PB4 /*SCK*/, PB3 /*DT*/> adc;
+  hx711::hx711<PB4 /*SCK*/, PB3 /*DT*/> adc;
 
-    while(true) {
-        if(auto code = adc.read())
-            do_something(code.value());
-    }
+  auto code = adc.read(); // gain=128
+  auto code_64 = adc.read(hx711::gain::_64); // gain=64
+  auto code_32 = adc.read(hx711::gain::_32); // gain=32
 }
 #+END_SRC
-
-**** Synchronous reading
-[[file:demo/sync_read.cpp][demo/sync_read.cpp]]
-#+BEGIN_SRC C++
-#include <hx711.hpp>
-
-void do_something(int32_t code) {}
-
-int main() {
-    hx711::hx711<PB4 /*SCK*/, PB3 /*DOUT*/> adc;
-    while(true) {
-      do_something(hx711::sync_read(adc));
-    }
-}
-#+END_SRC
+[[file:demo/gain.cpp][demo/gain.cpp]]
 
 *** Supported microcontrollers
 :PROPERTIES:
@@ -43,5 +50,5 @@ int main() {
 1. ATtiny85
 
 ** Requirements
-1. ~avr-gcc~ with ~-std=c++17~
+1. ~avr-gcc~ with ~-std=c++14~
 2. ~avr-libc 2.0~

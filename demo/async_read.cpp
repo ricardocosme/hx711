@@ -1,12 +1,11 @@
 #include <hx711.hpp>
 
-void do_something(int32_t code) {}
-
 int main() {
-    hx711::hx711<PB4 /*SCK*/, PB3 /*DT*/> adc;
+    hx711::adc<PB4 /*SCK*/, PB3 /*DT*/> adc;
 
+    //event loop
     while(true) {
-        if(auto code = adc.read())
-            do_something(code.value());
+        if(auto code = adc.async_read())
+            auto value = code.value();
     }
 }

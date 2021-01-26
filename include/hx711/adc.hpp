@@ -1,27 +1,41 @@
 #pragma once
 
 #include "hx711/avr/gpio.hpp"
+#include "hx711/detail/read.hpp"
+#include "hx711/gain.hpp"
 #include "hx711/lazy_value.hpp"
+
 #include <stdint.h>
 #include <util/atomic.h>
+#include <type_traits>
 
 namespace hx711 {
 
 template<uint8_t SCK, uint8_t DOUT>
-class hx711 {
+class adc {
     uint8_t _state{0};
 public:
     constexpr static uint8_t sck = SCK;
     constexpr static uint8_t dout = DOUT;
     
-    hx711() {
+    adc() {
         out(sck);
         low(sck); //normal operation mode
         in(dout);
         high(dout); //enable pullup resistor
     }
 
-    /* Reads an ADC code
+    /* Reads an ADC code [synchronous]
+
+       This method blocks until the adc code is available. Take a look
+       at async_read() to read without blocking.
+     */
+    auto read(gain g = gain::_128) noexcept {
+        while(detail::data_is_not_ready(dout));
+        return detail::read(sck, dout, g);
+    }
+    
+    /* Reads an ADC code [asynchronous]
 
        This is an ansychronous operation. The first time that the
        method is called the conversion is started and the method
@@ -45,30 +59,18 @@ public:
          Take a look at sync_read.hpp if a synchronous reading is
          desired.
      */
-    lazy_value read() noexcept {
+    lazy_value async_read(gain g = gain::_128) noexcept {
         switch(_state) {
         case 0: {
-            while(PINB & (1<<DOUT)) {
+            while(detail::data_is_not_ready(dout)) {
                 _state = 1;
                 return {};
             case 1: {}
             }
         }
         default: {
-            int32_t code{};
-            ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-                for(uint8_t i{24}; i > 0; --i){
-                    high(sck);
-                    low(sck);
-                    code <<= 1;
-                    if(PINB & (1<<DOUT)) ++code;
-                }
-                high(sck);
-                low(sck);
-            }
             _state = 0;
-            if(code & 0x00800000) code |= 0xFF000000;
-            return code;
+            return detail::read(sck, dout, g);
         }
         }
         return {};
