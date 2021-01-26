@@ -1,15 +1,14 @@
 #pragma once
 
-#include "hx711/sensor.hpp"
-
-#include <stdint.h>
+#include "hx711/hx711.hpp"
 
 namespace hx711 {
 
-template<typename Sensor>
-inline auto sync_read(Sensor& sensor) noexcept {
+//Synchronous reading
+template<typename HX711>
+inline auto sync_read(HX711& adc) noexcept {
     while(true) {
-        if(auto t = sensor.read())
+        if(auto t = adc.read())
             return t.value();
     }
 }
