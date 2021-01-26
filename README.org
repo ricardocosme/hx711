@@ -11,7 +11,7 @@ int main() {
   auto code = adc.read();
 }
 #+END_SRC
-[[file:demo/sync_read.cpp][demo/sync_read.cpp]]
+[[file:demo/read.cpp][demo/read.cpp]]
 
 **** Asynchronous reading
 #+BEGIN_SRC C++
@@ -27,7 +27,7 @@ int main() {
   }
 }
 #+END_SRC
-[[file:demo/sync_read.cpp][demo/async_read.cpp]]
+[[file:demo/async_read.cpp][demo/async_read.cpp]]
 
 **** Gain 128/64/32
 The default gain used to read is 128 at channel A, but the gain 64(ch. A) or gain 32(ch. B) can be used:
