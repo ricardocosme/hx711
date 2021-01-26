@@ -1,0 +1,37 @@
+** HX711 noise [experiment]
+
+This is an experiment to measure the intrinsic noise of HX711 @ 10SPS & gain=128 in terms of input-referred noise. One question that arises to me is: /What is the amount of noise that is really inserted into the system by HX711?/ The [[file:~/hx711/datasheet.pdf][datasheet]] answers the question in the table /KEY ELECTRICAL CHARACTERISTICS/, inside the row /Input noise (Gain = 128, 10SPS) = 50nV(rms). But I wanted to see with my own eyes to give me more confidence about what I really have in hands. In the end, this process can give me all I need to measure the noise of my system(for example, load cell plus ADC) and with that I can answer an important question to me: /Am I doing the right thing to use the ADC with a load cell in terms of wiring, grounding, power supply and etc?/
+
+The HX711 is a high-resolution ADC with a PGA and in this case the predominant noise is the ADC's thermal noise plus the amplifier's noise. The quantization noise is not expressive in this scenario but the highest provided gain of 128 offers a better relationship between the signal and the noise(SNR). 
+
+The input-referred noise is an absolute parameter in the sense that I can easily use it to compare the HX711's noise with other 24-bit ADCs without worrying about the value of the voltage reference Vref. It can be modeled as a voltage source of noise attached to the input of the system, which means a noise before the amplification and the ADC conversion.
+
+In order to measure the noise, the inputs ~A+~ and ~A-~ were shorted and *1,200* samples of codes of the ADC were collected. 
+
+[[file:adc_noise.png]]
+
+The graph above plots the ADC codes and it allows an eyeball examination to see if there is any expressive creep of the sensor in the range. The goal here is to achieve something that can be modeled by a constant function, or in other words a line with slope equal to zero.
+
+If a histogram is used to view the data set, it's possible to see that the distribution of the ADC codes can be represented by a normal distribution. The standard deviation(*sdev*) of the data set can be calculated to estimate the standard deviation of the population and I believe that the value can be compared with the one provided in the datasheet expressed in terms of RMS.
+
+The standard deviation using samples is the square root of the variance, and variance is the sum of all the squared differences between the values and the mean over the number of samples minus one:
+
+[[file:sdev.gif]]
+
+The standard deviation(*sdev*) to the data set is equal to *26.0403 code*. The *LSB* size should be calculated to allow a conversion of the number of codes to a voltage. The measurement of the size of each code represents the resolution of the ADC to a specific *FSR* (full scale range) and gain.
+
+The datasheet shows how to calculate the *FSR*. The AVDD in this experimentt is equal to *4.05V*:
+
+[[file:fsr.gif]]
+
+[[file:lsb.gif]]
+
+Now, the standard deviaton can be calculated using *nV* as unit instead of the number of codes of the ADC:
+
+[[file:sdev_nv.gif]]
+
+Cool! The standard deviation of *49nV* is very close to *50nV*, which is the value provided by the datasheet.
+
+[[https://godbolt.org/z/6TzY6T][I've written a C++ program to calculate the standard deviation, noise (1sigma) and peak-to-peak noise (6.6sigma) of the data set with 1,200 samples.]] (~noise.cpp~)
+
+One standard deviation represents only *~68%* of the noise. The value can be multiplied by *6.6* in order to achieve a peak-to-peak noise that represents *~99.95%* of the possible noise, which means that a reasonable estimation to the peak-to-peak noise is *~324nV*.
