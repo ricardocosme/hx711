@@ -7,6 +7,7 @@
 
 #include <stdint.h>
 #include <util/atomic.h>
+#include <util/delay.h>
 #include <type_traits>
 
 namespace hx711 {
@@ -29,6 +30,8 @@ public:
 
        This method blocks until the adc code is available. Take a look
        at async_read() to read without blocking.
+
+       precondition: the adc is powered up.
      */
     auto read(gain g = gain::_128) noexcept {
         while(detail::data_is_not_ready(dout));
@@ -58,6 +61,8 @@ public:
 
          Take a look at sync_read.hpp if a synchronous reading is
          desired.
+
+         precondition: the adc is powered up.
      */
     lazy_value async_read(gain g = gain::_128) noexcept {
         switch(_state) {
@@ -75,6 +80,15 @@ public:
         }
         return {};
     }
+
+    //power down the adc
+    void off() const noexcept {
+        high(sck);
+        _delay_us(61);
+    }
+
+    //power up the adc
+    void on() const noexcept { low(sck); }
 };
 
 }

@@ -7,7 +7,7 @@ The [[file:datasheet.pdf][HX711]] is a high-resolution 24-bit ADC designed for w
 #include <hx711.hpp>
 
 int main() {
-  hx711::hx711<PB4 /*SCK*/, PB3 /*DOUT*/> adc;
+  hx711::adc<PB4 /*SCK*/, PB3 /*DOUT*/> adc;
   auto code = adc.read();
 }
 #+END_SRC
@@ -18,7 +18,7 @@ int main() {
 #include <hx711.hpp>
 
 int main() {
-  hx711::hx711<PB4 /*SCK*/, PB3 /*DT*/> adc;
+  hx711::adc<PB4 /*SCK*/, PB3 /*DT*/> adc;
 
   //event loop
   while(true) {
@@ -30,18 +30,18 @@ int main() {
 [[file:demo/sync_read.cpp][demo/async_read.cpp]]
 
 **** Gain 128/64/32
+The default gain used to read is 128 at channel A, but the gain 64(ch. A) or gain 32(ch. B) can be used:
 #+BEGIN_SRC C++
-#include <hx711.hpp>
-
-int main() {
-  hx711::hx711<PB4 /*SCK*/, PB3 /*DT*/> adc;
-
-  auto code = adc.read(); // gain=128
-  auto code_64 = adc.read(hx711::gain::_64); // gain=64
-  auto code_32 = adc.read(hx711::gain::_32); // gain=32
-}
+auto code_64 = adc.read(hx711::gain::_64); // gain=64
+auto code_32 = adc.read(hx711::gain::_32); // gain=32
 #+END_SRC
-[[file:demo/gain.cpp][demo/gain.cpp]]
+
+**** Power-down
+The adc can be powered down to save energy through a call ~off()~ and it can be powered up again using the method ~on()~:
+#+BEGIN_SRC C++
+adc.off(); //power down
+adc.on();  //power up
+#+END_SRC
 
 *** Supported microcontrollers
 :PROPERTIES:
