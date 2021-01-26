@@ -53,5 +53,5 @@ adc.on();  //power up
 1. ~avr-gcc~ with ~-std=c++14~
 2. ~avr-libc 2.0~
 
-**** [[file:extra/noise/adc_noise.org][[Extra] HX711 noise]]
-An experiment to measure the intrinsic noise of HX711 @ 10SPS & Gain=128.
+**** [Extra] HX711 noise
+[[file:extra/noise/adc_noise.org][An experiment to measure the intrinsic noise of HX711 @ 10SPS & Gain=128.]]
