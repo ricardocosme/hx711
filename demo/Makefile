@@ -1,5 +1,5 @@
 MCU_TARGET=attiny85
-STD_CXX=c++17
+STD_CXX=c++14
 OPTIMIZE=-Os
 
 CXX=avr-g++
