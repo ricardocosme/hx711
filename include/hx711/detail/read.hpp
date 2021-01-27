@@ -12,7 +12,7 @@ namespace hx711::detail {
 inline bool data_is_not_ready(uint8_t dout) noexcept
 { return PINB & (1<<dout); }
 
-inline auto read(uint8_t sck, uint8_t dout, gain g) noexcept {
+inline int32_t read(uint8_t sck, uint8_t dout, gain g) noexcept {
     int32_t code{};
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
         for(uint8_t i{24}; i > 0; --i){

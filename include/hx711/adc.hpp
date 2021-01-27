@@ -32,7 +32,7 @@ public:
 
        precondition: the adc is powered up.
      */
-    auto read(gain g = gain::_128) noexcept {
+    lazy_value read(gain g = gain::_128) noexcept {
         while(detail::data_is_not_ready(dout));
         return detail::read(sck, dout, g);
     }

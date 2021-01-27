@@ -1,5 +1,5 @@
-** HX711 C++14 driver for ATtiny85/13A
-The [[file:datasheet.pdf][HX711]] is a high-resolution 24-bit ADC designed for weight scales and other applications that interface with a bridge sensor. This is a header only C++14 driver to interface with  [[file:datasheet.pdf][HX711]] using an ATtiny85/13A.
+** HX711 C++11 driver for ATtiny85/13A
+The [[file:datasheet.pdf][HX711]] is a high-resolution 24-bit ADC designed for weight scales and other applications that interface with a bridge sensor. This is a header only C++11 driver to interface with  [[file:datasheet.pdf][HX711]] using an ATtiny85/13A.
 
 *** Demo
 **** Synchronous reading
@@ -51,7 +51,7 @@ adc.on();  //power up
 Take a look at ~demo/read.cpp~ and ~demo/Makefile~ to see an example of the above steps. If you're lost after that, then I suggest to begin with ~demo/read.cpp~ and a command line invocation of ~avr-gcc~, for example:
 #+BEGIN_SRC sh
 cd demo
-avr-g++ -Os -mmcu=attiny85 -std=c++14 -I../include -DF_CPU=1000000 read.cpp
+avr-g++ -Os -mmcu=attiny85 -std=c++11 -I../include -DF_CPU=1000000 read.cpp
 #+END_SRC
 
 Notice, we're using in the example above an ATtiny85 configured with a clock of 1Mhz, you can change the parameters as necessary to your usage.
@@ -66,7 +66,7 @@ Notice, we're using in the example above an ATtiny85 configured with a clock of 
 2. ATtiny85
 
 *** Requirements
-1. ~avr-gcc~ with ~-std=c++14~
+1. ~avr-gcc~ with ~-std=c++11~
 2. ~avr-libc 2.0~
 
 **** [Extra] HX711 noise
