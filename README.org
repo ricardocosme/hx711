@@ -1,5 +1,5 @@
-** HX711 C++14 driver for ATtiny85
-The [[file:datasheet.pdf][HX711]] is a high-resolution 24-bit ADC designed for weight scales and other applications that interface with a bridge sensor. This is a header only C++14 driver to interface with  [[file:datasheet.pdf][HX711]] using an ATtiny85.
+** HX711 C++14 driver for ATtiny85/13A
+The [[file:datasheet.pdf][HX711]] is a high-resolution 24-bit ADC designed for weight scales and other applications that interface with a bridge sensor. This is a header only C++14 driver to interface with  [[file:datasheet.pdf][HX711]] using an ATtiny85/13A.
 
 *** Demo
 **** Synchronous reading
@@ -47,7 +47,8 @@ adc.on();  //power up
 :PROPERTIES:
 :CUSTOM_ID: supported_microcontrollers
 :END:
-1. ATtiny85
+1. ATtiny13A
+2. ATtiny85
 
 *** Requirements
 1. ~avr-gcc~ with ~-std=c++14~
