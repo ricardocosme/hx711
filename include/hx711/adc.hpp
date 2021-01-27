@@ -8,7 +8,6 @@
 #include <stdint.h>
 #include <util/atomic.h>
 #include <util/delay.h>
-#include <type_traits>
 
 namespace hx711 {
 

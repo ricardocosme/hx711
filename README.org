@@ -43,6 +43,21 @@ adc.off(); //power down
 adc.on();  //power up
 #+END_SRC
 
+*** How to use it at my project?
+1. Add an include path at your project to ~include~.
+2. Ensure that the macro ~F_CPU~ is defined. [1]
+3. Include the header ~hx711.hpp~ (~#include <hx711.hpp>~) and it's done.
+
+Take a look at ~demo/read.cpp~ and ~demo/Makefile~ to see an example of the above steps. If you're lost after that, then I suggest to begin with ~demo/read.cpp~ and a command line invocation of ~avr-gcc~, for example:
+#+BEGIN_SRC sh
+cd demo
+avr-g++ -Os -mmcu=attiny85 -std=c++14 -I../include -DF_CPU=1000000 read.cpp
+#+END_SRC
+
+Notice, we're using in the example above an ATtiny85 configured with a clock of 1Mhz, you can change the parameters as necessary to your usage.
+
+[1] Why this? The library uses delay functions of ~avr-libc~ and that functions, or better saying macros, they need to know what is the clock of your microcontroller.
+
 *** Supported microcontrollers
 :PROPERTIES:
 :CUSTOM_ID: supported_microcontrollers
