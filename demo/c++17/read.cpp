@@ -1,6 +1,9 @@
 #include <hx711.hpp>
 
+using namespace avr::io;
+
 int main() {
-    hx711::adc<PB4 /*SCK*/, PB3 /*DT*/> adc;
+    hx711::adc adc{pb4, pb3};
     auto code = adc.read();
+
 }

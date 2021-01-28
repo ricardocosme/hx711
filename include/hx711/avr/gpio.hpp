@@ -1,20 +1,22 @@
 #pragma once
 
-#include <avr/io.h>
 
+template<typename Pin>
 [[gnu::always_inline]]
-inline void low(uint8_t pin)
-{ PORTB = PORTB & ~(1 << pin); }
+inline void low()
+{ *Pin::portB = *Pin::portB & ~(1 << Pin::num); }
 
+template<typename Pin>
 [[gnu::always_inline]]
-inline void high(uint8_t pin)
-{ PORTB = PORTB | (1 << pin); }
+inline void high()
+{ *Pin::portB = *Pin::portB | (1 << Pin::num); }
 
+template<typename Pin>
 [[gnu::always_inline]]
-inline void out(uint8_t pin)
-{ DDRB = DDRB | (1 << pin); }
+inline void out()
+{ *Pin::ddrB = *Pin::ddrB | (1 << Pin::num); }
 
+template<typename Pin>
 [[gnu::always_inline]]
-inline void in(uint8_t pin)
-{ DDRB = DDRB & ~(1 << pin); }
-
+inline void in()
+{ *Pin::ddrB = *Pin::ddrB & ~(1 << Pin::pin); }

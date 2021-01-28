@@ -1,14 +1,14 @@
 MCU_TARGET=attiny85
 AVRDUDE_DEVICE=t85
-STD_CXX=c++11
+F_CPU=1000000
 OPTIMIZE=-Os
 
 CXX=avr-g++
 CC=avr-gcc
 OBJCOPY=avr-objcopy
 OBJDUMP=avr-objdump
-INCLUDE=-I../../att85/include -I../include
-CXXFLAGS=-std=$(STD_CXX) -g -mmcu=$(MCU_TARGET) -Wall -Wno-unused-variable -Wno-unused-but-set-variable $(OPTIMIZE) -DF_CPU=1000000 $(INCLUDE)
+INCLUDE=-I../../include
+CXXFLAGS=-std=$(STD_CXX) -g -mmcu=$(MCU_TARGET) -Wall -Wno-unused-variable -Wno-unused-but-set-variable $(OPTIMIZE) -DF_CPU=$(F_CPU) $(INCLUDE)
 
 demos = read async_read gain
 

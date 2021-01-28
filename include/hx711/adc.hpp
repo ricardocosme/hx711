@@ -1,6 +1,6 @@
 #pragma once
 
-#include "hx711/avr/gpio.hpp"
+// #include "hx711/avr/gpio.hpp"
 #include "hx711/detail/read.hpp"
 #include "hx711/gain.hpp"
 #include "hx711/lazy_value.hpp"
@@ -11,18 +11,23 @@
 
 namespace hx711 {
 
-template<uint8_t SCK, uint8_t DOUT>
+template<typename SCK, typename DOUT>
 class adc {
     uint8_t _state{0};
 public:
-    constexpr static uint8_t sck = SCK;
-    constexpr static uint8_t dout = DOUT;
-    
-    adc() {
-        out(sck);
-        low(sck); //normal operation mode
-        in(dout);
-        high(dout); //enable pullup resistor
+    using sck = SCK;
+    using dout = DOUT;
+
+#if (__cplusplus >= 201703L)
+    adc(SCK, DOUT)
+#else
+    adc()
+#endif
+    {
+        sck::out();
+        sck::low(); //normal operation mode
+        dout::in();
+        dout::high(); //enable pullup resistor
     }
 
     /* Reads an ADC code [synchronous]
@@ -32,9 +37,9 @@ public:
 
        precondition: the adc is powered up.
      */
-    lazy_value read(gain g = gain::_128) noexcept {
-        while(detail::data_is_not_ready(dout));
-        return detail::read(sck, dout, g);
+    int32_t read(gain g = gain::_128) noexcept {
+        while(detail::data_is_not_ready<dout>());
+        return detail::read<sck, dout>(g);
     }
     
     /* Reads an ADC code [asynchronous]
@@ -66,7 +71,7 @@ public:
     lazy_value async_read(gain g = gain::_128) noexcept {
         switch(_state) {
         case 0: {
-            while(detail::data_is_not_ready(dout)) {
+            while(detail::data_is_not_ready<dout>()) {
                 _state = 1;
                 return {};
             case 1: {}
@@ -74,7 +79,7 @@ public:
         }
         default: {
             _state = 0;
-            return detail::read(sck, dout, g);
+            return detail::read<sck, dout>(g);
         }
         }
         return {};
@@ -82,12 +87,12 @@ public:
 
     //power down the adc
     void off() const noexcept {
-        high(sck);
+        sck::high();
         _delay_us(61);
     }
 
     //power up the adc
-    void on() const noexcept { low(sck); }
+    void on() const noexcept { sck::low(); }
 };
 
 }
