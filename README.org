@@ -48,8 +48,8 @@ The adc can be powered down to save energy through a call ~off()~ and it can be 
 
 Take a look at ~demo/read.cpp~ and ~demo/Makefile~ to see an example of the above steps. If you're lost after that, then I suggest to begin with ~demo/read.cpp~ and a command line invocation of ~avr-gcc~, for example:
 #+BEGIN_SRC sh
-cd demo
-avr-g++ -Os -mmcu=attiny85 -std=c++11 -I../include -DF_CPU=1000000 read.cpp
+cd demo/c++11
+avr-g++ -Os -mmcu=attiny85 -std=c++11 -I../../include -DF_CPU=1000000 read.cpp
 #+END_SRC
 
 Notice, we're using in the example above an ATtiny85 configured with a clock of 1Mhz, you can change the parameters as necessary to your usage.
