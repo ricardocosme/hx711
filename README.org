@@ -1,9 +1,9 @@
-** HX711 C++11/17 driver for ATtiny85/13A
-The [[file:datasheet.pdf][HX711]] is a high-resolution 24-bit ADC designed for weight scales and other applications that interface with a bridge sensor. This is a header only C++11/17 driver to interface with  [[file:datasheet.pdf][HX711]] using an ATtiny85/13A.
+** HX711 C++11/17 driver for AVR-8
+The [[file:datasheet.pdf][HX711]] is a high-resolution 24-bit ADC designed for weight scales and other applications that interface with a bridge sensor. This is a header only C++11/17 driver to interface with  [[file:datasheet.pdf][HX711]] using an ATtiny85/13A or ATmega328P.
 
 *** Demo
 **** Synchronous reading
-The demo below is written in C++17, take a look at [[file:demo/c++11/read.cpp][demo/c++11/read.cpp]]~ to view the version with support to C++11.
+The demo below is written in C++17, take a look at [[file:demo/c++11/read.cpp][demo/c++11/read.cpp]] to view the version with support to C++11.
 #+BEGIN_SRC C++
 #include <hx711.hpp>
 
@@ -15,7 +15,7 @@ int main() {
 [[file:demo/c++17/read.cpp][demo/c++17/read.cpp]]
 
 **** Asynchronous reading
-The demo below is written in C++17, take a look at [[file:demo/c++11/async_read.cpp][demo/c++11/async_read.cpp]]~ to view the version with support to C++11.
+The demo below is written in C++17, take a look at [[file:demo/c++11/async_read.cpp][demo/c++11/async_read.cpp]] to view the version with support to C++11.
 #+BEGIN_SRC C++
 #include <hx711.hpp>
 
@@ -62,6 +62,7 @@ Notice, we're using in the example above an ATtiny85 configured with a clock of 
 :END:
 1. ATtiny13A
 2. ATtiny85
+3. ATmega328P
 
 *** Requirements
 1. ~avr-gcc~ with at least ~-std=c++11~. /Note: If C++14 or C++17 is used then some additional features can be offered./
