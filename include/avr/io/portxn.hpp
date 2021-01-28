@@ -24,19 +24,24 @@ struct portxn {
     
     static volatile uint8_t* port() noexcept
     { return to_addr(port_addr); }
-    
+
+    [[gnu::always_inline]]
     static void low() noexcept
     { *port() = *port() & ~(1 << num); }
     
+    [[gnu::always_inline]]
     static void high() noexcept
     { *port() = *port() | (1 << num); }
 
+    [[gnu::always_inline]]
     static void out() noexcept
     { *ddr() = *ddr() | (1 << num); }
 
+    [[gnu::always_inline]]
     static void in() noexcept
     { *ddr() = *ddr() & ~(1 << num); }
 
+    [[gnu::always_inline]]
     static bool read() noexcept
     { return *pin() & (1<<num); }
 };
