@@ -7,7 +7,7 @@ CXX=avr-g++
 CC=avr-gcc
 OBJCOPY=avr-objcopy
 OBJDUMP=avr-objdump
-INCLUDE=-I../../include
+INCLUDE=-I../../include -I../../../avrIO/include
 CXXFLAGS=-std=$(STD_CXX) -g -mmcu=$(MCU_TARGET) -Wall -Wno-unused-variable -Wno-unused-but-set-variable $(OPTIMIZE) -DF_CPU=$(F_CPU) $(INCLUDE)
 
 demos = read async_read gain

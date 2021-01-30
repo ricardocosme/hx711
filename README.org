@@ -63,9 +63,12 @@ Notice, we're using in the example above an ATtiny85 configured with a clock of 
 2. ATtiny85
 3. ATmega328P
 
+*** Dependencies
+1. [[https://github.com/ricardocosme/avrIO][avrIO]]
+2. avr-libc 2.0
+
 *** Requirements
 1. ~avr-gcc~ with at least ~-std=c++11~. /Note: If C++14 or C++17 is used then some additional features can be offered./
-2. ~avr-libc 2.0~
 
 **** [Extra] HX711 noise
 [[file:extra/noise/adc_noise.org][An experiment to measure the intrinsic noise of HX711 @ 10SPS & Gain=128.]]
