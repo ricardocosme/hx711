@@ -3,7 +3,6 @@
 using namespace avr::io;
 
 int main() {
-    hx711::adc<pb4 /*SCK*/, pb3 /*DT*/> adc;
+    auto adc = hx711::make_adc(pb4 /*SCK*/, pb3 /*DOUT*/);
     auto code = adc.read();
-
 }

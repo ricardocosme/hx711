@@ -18,12 +18,7 @@ public:
     using sck = SCK;
     using dout = DOUT;
 
-#if (__cplusplus >= 201703L)
-    adc(SCK, DOUT)
-#else
-    adc()
-#endif
-    {
+    adc(SCK, DOUT) {
         sck::out();
         sck::low(); //normal operation mode
         dout::in();
@@ -94,5 +89,9 @@ public:
     //power up the adc
     void on() const noexcept { sck::low(); }
 };
+
+template<typename SCK, typename DOUT>
+inline adc<SCK, DOUT> make_adc(SCK sck, DOUT dout)
+{ return adc<SCK, DOUT>(sck, dout); }
 
 }

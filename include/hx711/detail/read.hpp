@@ -11,7 +11,7 @@ namespace hx711 { namespace detail {
 template<typename DOUT>
 [[gnu::always_inline]]
 inline bool data_is_not_ready() noexcept
-{ return DOUT::read(); }
+{ return DOUT::is_high(); }
 
 template<typename SCK, typename DOUT>
 inline int32_t read(gain g) noexcept {
@@ -21,7 +21,7 @@ inline int32_t read(gain g) noexcept {
             SCK::high();
             SCK::low();;
             code <<= 1;
-            if(DOUT::read()) ++code;
+            if(DOUT::is_high()) ++code;
         }
         SCK::high();
         SCK::low();;
