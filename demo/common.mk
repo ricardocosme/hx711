@@ -1,5 +1,5 @@
-MCU_TARGET=attiny85
-AVRDUDE_DEVICE=t85
+MCU=attiny85
+AVRDUDE=t85
 F_CPU=1000000
 OPTIMIZE=-Os
 
@@ -8,7 +8,7 @@ CC=avr-gcc
 OBJCOPY=avr-objcopy
 OBJDUMP=avr-objdump
 INCLUDE=-I../../include -I../../../avrIO/include
-CXXFLAGS=-std=$(STD_CXX) -g -mmcu=$(MCU_TARGET) -Wall -Wno-unused-variable -Wno-unused-but-set-variable $(OPTIMIZE) -DF_CPU=$(F_CPU) $(INCLUDE)
+CXXFLAGS=-std=$(STD_CXX) -g -mmcu=$(MCU) -Wall -Wno-unused-variable -Wno-unused-but-set-variable $(OPTIMIZE) -DF_CPU=$(F_CPU) $(INCLUDE)
 
 demos = read async_read gain
 
@@ -36,7 +36,7 @@ include $(demos:%=%.d)
 
 .PHONY: flash_%
 flash-%: %.hex
-	avrdude -p $(AVRDUDE_DEVICE) -c usbasp -P usb  -U flash:w:$<
+	avrdude -p $(AVRDUDE) -c usbasp -P usb  -U flash:w:$<
 
 size:
 	avr-size $(demos:%=%.elf)
