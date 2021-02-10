@@ -27,8 +27,7 @@ public:
         using namespace avr::io;
         out(sck);
         low(sck); //normal operation mode
-        in(dout);
-        high(dout); //enable pullup resistor
+        in(dout, pullup);
     }
 
     /* Reads an ADC code [synchronous]

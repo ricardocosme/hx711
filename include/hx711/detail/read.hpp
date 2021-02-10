@@ -2,7 +2,7 @@
 
 #include "hx711/gain.hpp"
 
-#include <avr/io/io.hpp>
+#include <avr/io.hpp>
 #include <stdint.h>
 #include <util/atomic.h>
 
