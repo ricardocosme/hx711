@@ -1,5 +1,5 @@
-** HX711 C++11/17 driver for AVR-8
-The [[file:datasheet.pdf][HX711]] is a high-resolution 24-bit ADC designed for weight scales and other applications that interface with a bridge sensor. This is a header only C++11/17 driver to interface with  [[file:datasheet.pdf][HX711]] using an ATtiny85/13A or ATmega328P.
+** HX711 C++11/17/20 driver for AVR-8
+The [[file:datasheet.pdf][HX711]] is a high-resolution 24-bit ADC designed for weight scales and other applications that interface with a bridge sensor. This is a header only C++11/17/20 driver to interface with  [[file:datasheet.pdf][HX711]] using an ATtiny85/13A or ATmega328P.
 
 *** Demo
 The demos below are written in C++17, take a look at [[file:demo/c++11][demo/c++11]] to view the versions with support to C++11.
@@ -68,7 +68,7 @@ Notice, we're using in the example above an ATtiny85 configured with a clock of 
 2. avr-libc 2.0
 
 *** Requirements
-1. ~avr-gcc~ with at least ~-std=c++11~. /Note: If C++14 or C++17 is used then some additional features can be offered./
+1. ~avr-gcc~ with at least ~-std=c++11~. /Note: If C++14, C++17 or C++20 is used then some additional features can be offered./
 
 **** [Extra] HX711 noise
 [[file:extra/noise/adc_noise.org][An experiment to measure the intrinsic noise of HX711 @ 10SPS & Gain=128.]]

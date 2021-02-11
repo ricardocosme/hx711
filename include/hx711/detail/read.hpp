@@ -13,8 +13,11 @@ template<typename DOUT>
 inline bool data_is_not_ready(DOUT dout) noexcept
 { return avr::io::is_high(dout); }
 
-template<typename SCK, typename DOUT>
-inline int32_t read(SCK sck, DOUT dout, gain g) noexcept {
+template<typename PD_SCK, typename DOUT>
+#if __cplusplus > 201703L //Use concepts if c++20 is available
+requires avr::io::Pin<PD_SCK> && avr::io::Pin<DOUT>
+#endif
+inline int32_t read(PD_SCK sck, DOUT dout, gain g) noexcept {
     using namespace avr::io;
     int32_t code{};
     ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {

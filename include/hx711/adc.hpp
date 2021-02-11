@@ -5,22 +5,26 @@
 #include "hx711/gain.hpp"
 #include "hx711/lazy_value.hpp"
 
+#include <avr/io.hpp>
 #include <stdint.h>
 #include <util/atomic.h>
 #include <util/delay.h>
 
 namespace hx711 {
 
-template<typename SCK, typename DOUT>
+template<typename PD_SCK, typename DOUT>
+#if __cplusplus > 201703L //Use concepts if c++20 is available
+requires avr::io::Pin<PD_SCK> && avr::io::Pin<DOUT>
+#endif
 class adc {
     uint8_t _state{0};
-    const SCK _sck;
+    const PD_SCK _sck;
     const DOUT _dout;
 public:
-    using sck_t = SCK;
+    using sck_t = PD_SCK;
     using dout_t = DOUT;
 
-    adc(SCK sck, DOUT dout)
+    adc(PD_SCK sck, DOUT dout)
         : _sck(sck)
         , _dout(dout)
     {
@@ -95,8 +99,8 @@ public:
     void on() const noexcept { low(_sck); }
 };
 
-template<typename SCK, typename DOUT>
-inline adc<SCK, DOUT> make_adc(SCK sck, DOUT dout)
-{ return adc<SCK, DOUT>(sck, dout); }
+template<typename PD_SCK, typename DOUT>
+inline adc<PD_SCK, DOUT> make_adc(PD_SCK sck, DOUT dout)
+{ return adc<PD_SCK, DOUT>(sck, dout); }
 
 }
