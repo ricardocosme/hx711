@@ -4,11 +4,11 @@
 
 namespace hx711 {
 
-/* Represents a future value
+/** Represents a future value
 
-   If there isn't any value yet the method done() returns false and
-   true otherwise. If done() == true then the value can be obtained
-   through value().
+    If there isn't any value yet the method done() returns false and
+    true otherwise. If done() == true then the value can be obtained
+    through value().
  */
 class lazy_value {
     int32_t _value{INT32_MAX};
