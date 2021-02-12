@@ -24,13 +24,15 @@ requires avr::io::Pin<PD_SCK> && avr::io::Pin<DOUT>
 #endif
 class adc {
     uint8_t _state{0};
-    const PD_SCK _sck;
-    const DOUT _dout;
+    PD_SCK _sck;
+    DOUT _dout;
 public:
     using sck_t = PD_SCK;
     using dout_t = DOUT;
 
-    adc(PD_SCK sck, DOUT dout)
+    adc() = default;
+    
+    adc(PD_SCK sck, DOUT dout) noexcept
         : _sck(sck)
         , _dout(dout)
     {

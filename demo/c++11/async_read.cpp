@@ -3,7 +3,7 @@
 using namespace avr::io;
 
 int main() {
-    auto adc = hx711::make_adc(pb4 /*SCK*/, pb3 /*DOUT*/);
+    auto adc = hx711::make_adc(pb4 /*PD_SCK*/, pb3 /*DOUT*/);
     
     //event loop
     while(true) {
