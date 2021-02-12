@@ -1,5 +1,5 @@
 MCU=attiny85
-AVRDUDE=t85
+AVRDUDE_DEVICE=t85
 F_CPU=1000000
 OPTIMIZE=-Os
 
@@ -36,7 +36,7 @@ include $(demos:%=%.d)
 
 .PHONY: flash_%
 flash-%: %.hex
-	avrdude -p $(AVRDUDE) -c usbasp -P usb  -U flash:w:$<
+	avrdude -p $(AVRDUDE_DEVICE) -c usbasp -P usb  -U flash:w:$<
 
 size:
 	avr-size $(demos:%=%.elf)
