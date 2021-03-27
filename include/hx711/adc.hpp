@@ -39,7 +39,7 @@ public:
         using namespace avr::io;
         out(sck);
         low(sck); //normal operation mode
-        in(dout, pullup);
+        in(pullup, dout);
     }
 
     /** Reads an ADC code [synchronous]
