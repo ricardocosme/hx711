@@ -2,12 +2,14 @@ MCU=attiny85
 AVRDUDE_DEVICE=t85
 F_CPU=1000000
 OPTIMIZE=-Os
+AVR_IO_INC=../../../avrIO/include
+AVR_INT_INC=../../../avrINT/include
 
 CXX=avr-g++
 CC=avr-gcc
 OBJCOPY=avr-objcopy
 OBJDUMP=avr-objdump
-INCLUDE=-I../../include -I../../../avrIO/include
+INCLUDE=-I../../include -I$(AVR_IO_INC) -I$(AVR_INT_INC)
 CXXFLAGS=-std=$(STD_CXX) -g -mmcu=$(MCU) -Wall -Wno-unused-variable -Wno-unused-but-set-variable $(OPTIMIZE) -DF_CPU=$(F_CPU) $(INCLUDE)
 
 demos = read async_read gain

@@ -2,9 +2,9 @@
 
 #include "hx711/gain.hpp"
 
+#include <avr/interrupt.hpp>
 #include <avr/io.hpp>
 #include <stdint.h>
-#include <util/atomic.h>
 
 namespace hx711 { namespace detail {
 
@@ -26,8 +26,10 @@ requires avr::io::Pin<PD_SCK> && avr::io::Pin<DOUT>
 #endif
 inline int32_t read(PD_SCK sck, DOUT dout, gain g) noexcept {
     using namespace avr::io;
+    using namespace avr::interrupt;
     int32_t code{};
-    ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+    {
+        atomic<> s;
         for(uint8_t i{24}; i > 0; --i){
             pulse(sck);
             code <<= 1;
